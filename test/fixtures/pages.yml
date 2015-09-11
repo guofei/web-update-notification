@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  hash: MyString
+  uri: MyString
+  uuid: MyString
+  sec: 1
+
+two:
+  content: MyText
+  hash: MyString
+  uri: MyString
+  uuid: MyString
+  sec: 1
