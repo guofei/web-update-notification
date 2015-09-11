@@ -6,14 +6,9 @@
 #  content    :text
 #  hash       :string
 #  uri        :string
-#  uuid       :string
 #  sec        :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#
-# Indexes
-#
-#  index_pages_on_uuid  (uuid) UNIQUE
 #
 
 require 'test_helper'
