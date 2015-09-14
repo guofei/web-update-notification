@@ -163,9 +163,11 @@ PLATFORMS
 DEPENDENCIES
   addressable (~> 2.3.8)
   annotate
+  connection_pool
   pg
   rails (= 4.2.4)
   rails-api
+  redis-namespace
   sidekiq
   spring
 

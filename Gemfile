@@ -31,5 +31,7 @@ gem 'pg'
 gem 'annotate'
 
 gem 'sidekiq'
+gem 'connection_pool'
+gem 'redis-namespace'
 
 gem 'addressable', '~> 2.3.8'
