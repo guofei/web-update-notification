@@ -29,3 +29,7 @@ gem 'pg'
 
 
 gem 'annotate'
+
+gem 'sidekiq'
+
+gem 'addressable', '~> 2.3.8'

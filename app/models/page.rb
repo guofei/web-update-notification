@@ -4,7 +4,7 @@
 #
 #  id           :integer          not null, primary key
 #  content      :text
-#  hash         :string
+#  digest       :string
 #  uri          :string
 #  sec          :integer
 #  created_at   :datetime         not null
@@ -13,4 +13,7 @@
 #
 
 class Page < ActiveRecord::Base
+  after_create do |page|
+    FetchWebpageJob.set(wait: page.sec.seconds).perform_later(page.id)
+  end
 end

@@ -4,7 +4,7 @@
 #
 #  id           :integer          not null, primary key
 #  content      :text
-#  hash         :string
+#  digest       :string
 #  uri          :string
 #  sec          :integer
 #  created_at   :datetime         not null
