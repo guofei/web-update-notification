@@ -31,6 +31,7 @@ gem 'pg'
 gem 'annotate'
 
 gem 'sidekiq'
+gem 'sinatra', :require => nil
 gem 'connection_pool'
 gem 'redis-namespace'
 
