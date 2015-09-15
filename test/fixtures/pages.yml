@@ -5,7 +5,7 @@
 #  id           :integer          not null, primary key
 #  content      :text
 #  digest       :string
-#  uri          :string
+#  url          :string
 #  sec          :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

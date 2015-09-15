@@ -12,7 +12,7 @@ class FetchWebpageJob < ActiveJob::Base
 
   def perform(page_id)
     page = Page.find(page_id)
-    uri = get_uri page.uri
+    uri = get_uri page.url
     return if uri.nil?
 
     open(uri, 'User-Agent' => 'Googlebot/2.1') do |f|

@@ -54,6 +54,6 @@ class PagesController < ApplicationController
     end
 
     def page_params
-      params.require(:page).permit(:content, :hash, :uri, :uuid, :sec)
+      params.require(:page).permit(:content, :hash, :url, :uuid, :sec)
     end
 end
