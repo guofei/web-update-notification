@@ -10,6 +10,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  push_channel :string
+#  stop_fetch   :boolean          default(FALSE)
 #
 
 require 'test_helper'
