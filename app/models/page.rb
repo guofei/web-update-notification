@@ -27,7 +27,7 @@ class Page < ActiveRecord::Base
   end
 
   def fetch_in_job
-    return if stop_fetch
+    return if is_stop_fetch?
     FetchWebpageJob.set(wait: sec.seconds).perform_later(id)
   end
 
@@ -51,6 +51,10 @@ class Page < ActiveRecord::Base
   end
 
   private
+
+  def is_stop_fetch?
+    stop_fetch || sec.nil? || sec <= 0
+  end
 
   # @param url URI or String
   # @return URI or nil
