@@ -36,21 +36,32 @@ class Page < ActiveRecord::Base
     uri = get_uri url
     return if uri.nil?
 
-    open(uri, 'User-Agent' => 'Googlebot/2.1') do |f|
-      new_content = f.read
-      new_digest = Digest::MD5.hexdigest(new_content)
+    new_content = get_content uri
+    return nil if new_content.nil?
 
-      if new_digest != digest
-        self.content = new_content
-        self.digest = new_digest
-        save
+    new_digest = Digest::MD5.hexdigest(new_content)
 
-        # TODO push
-      end
-    end
+    return if new_digest == digest
+
+    self.content = new_content
+    self.digest = new_digest
+    save
+
+    push_to_devise
   end
 
   private
+
+  def push_to_devise
+    return nil if push_channel.nil? || push_channel.length <= 0
+    client = Parse.create application_id: Rails.application.secrets.parse_app_id,
+                          api_key: Rails.application.secrets.parse_api_key
+    data = { alert: 'Webpage is updated' }
+    push = client.push(data, push_channel)
+    push.save
+  rescue
+    nil
+  end
 
   def is_stop_fetch?
     stop_fetch || sec.nil? || sec <= 0
@@ -63,6 +74,30 @@ class Page < ActiveRecord::Base
     return uri if uri.scheme == 'http' || uri.scheme == 'https'
     nil
   rescue
+    nil
+  end
+
+  # @param url URI or String
+  # @return String
+  def get_content(url)
+    doc = doc url
+    return nil if doc.nil?
+
+    return doc.text
+  end
+
+  # @param url URI or String
+  # @return Nokogiri::HTML::Document
+  def doc(url)
+    uri = get_uri url
+    return nil if uri.nil?
+
+    file = open(uri, 'User-Agent' => 'Googlebot/2.1')
+    doc = Nokogiri::HTML(file)
+    file.close
+    doc
+  rescue
+    file.close if file.class == Tempfile
     nil
   end
 end
