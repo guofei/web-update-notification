@@ -83,7 +83,12 @@ class Page < ActiveRecord::Base
     doc = doc url
     return nil if doc.nil?
 
-    return doc.text
+    body = doc.xpath('//body')
+    if body.empty?
+      doc.text
+    else
+      body.text
+    end
   end
 
   # @param url URI or String
