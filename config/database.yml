@@ -20,6 +20,7 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
+  template: template0
 
 development:
   <<: *default
@@ -81,5 +82,5 @@ test:
 production:
   <<: *default
   database: web-notifications_production
-  username: web-notifications
-  password: <%= ENV['WEB-NOTIFICATIONS_DATABASE_PASSWORD'] %>
+
+
