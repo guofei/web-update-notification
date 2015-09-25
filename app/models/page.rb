@@ -56,7 +56,7 @@ class Page < ActiveRecord::Base
     return nil if push_channel.nil? || push_channel.length <= 0
     client = Parse.create application_id: Rails.application.secrets.parse_app_id,
                           api_key: Rails.application.secrets.parse_api_key
-    data = { alert: 'Webpage is updated' }
+    data = { alert: "#{url} has been updated" }
     push = client.push(data, push_channel)
     push.save
   rescue
