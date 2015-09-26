@@ -3,7 +3,7 @@ class FetchWebpageJob < ActiveJob::Base
 
   after_perform do |job|
     page = Page.find_by_id(job.arguments.first)
-    return if page.nil?
+    next if page.nil?
     page.fetch_in_job
   end
 
