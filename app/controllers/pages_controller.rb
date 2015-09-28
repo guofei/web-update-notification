@@ -18,12 +18,18 @@ class PagesController < ApplicationController
   # POST /pages
   # POST /pages.json
   def create
-    @page = Page.new(page_params)
-
-    if @page.save
-      render json: @page, status: :created, location: @page
+    new_page = Page.new(page_params)
+    exist_page = Page.find_by(url: new_page.url, push_channel: new_page.push_channel)
+    if exist_page
+      exist_page.sec = new_page.sec
+      exist_page.stop_fetch = new_page.stop_fetch
     else
-      render json: @page.errors, status: :unprocessable_entity
+      @page = new_page
+      if @page.save
+        render json: @page, status: :created, location: @page
+      else
+        render json: @page.errors, status: :unprocessable_entity
+      end
     end
   end
 
