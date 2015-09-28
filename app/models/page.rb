@@ -28,7 +28,18 @@ class Page < ActiveRecord::Base
 
   def fetch_in_job
     return if is_stop_fetch?
-    FetchWebpageJob.set(wait: sec.seconds).perform_later(id)
+    FetchWebpageJob.set(wait: second.seconds).perform_later(id)
+  end
+
+  def second
+    return nl if sec.nil?
+
+    half_one_hour = 30 * 60
+    if sec < half_one_hour
+      half_one_hour
+    else
+      sec
+    end
   end
 
   def fetch
