@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :users, except: [:new, :edit]
+  resources :users do
+    collection do
+      post 'touch'
+    end
+  end
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
   resources :pages, except: [:new, :edit]
