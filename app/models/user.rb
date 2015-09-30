@@ -14,4 +14,5 @@
 #
 
 class User < ActiveRecord::Base
+  has_many :pages, primary_key: 'channel', foreign_key: 'push_channel'
 end

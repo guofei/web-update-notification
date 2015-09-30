@@ -4,7 +4,11 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def index
-    @pages = Page.all
+    if params[:user_id]
+      @pages = User.find(params[:user_id]).pages.where(stop_fetch: false)
+    else
+      @pages = Page.all
+    end
 
     render json: @pages
   end
