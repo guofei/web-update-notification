@@ -14,5 +14,5 @@
 #
 
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :channel
+  attributes :id, :name, :channel, :updated_at
 end
