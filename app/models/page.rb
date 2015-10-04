@@ -18,6 +18,8 @@ require 'digest/md5'
 require 'addressable/uri'
 
 class Page < ActiveRecord::Base
+  belongs_to :user, primary_key: 'channel', foreign_key: 'push_channel'
+
   after_create do |page|
     page.fetch_in_job
   end
@@ -81,7 +83,17 @@ class Page < ActiveRecord::Base
   end
 
   def is_stop_fetch?
-    stop_fetch || sec.nil? || sec <= 0
+    return true if stop_fetch || sec.nil? || sec <= 0
+
+    if user
+      if user.updated_at < 10.days.ago
+        return true
+      else
+        return false
+      end
+    else
+      return true
+    end
   end
 
   # @param url URI or String
