@@ -85,12 +85,8 @@ class Page < ActiveRecord::Base
   def is_stop_fetch?
     return true if stop_fetch || sec.nil? || sec <= 0
 
-    if user
-      if user.updated_at < 10.days.ago
-        return true
-      else
-        return false
-      end
+    if user && user.updated_recently
+      return false
     else
       return true
     end
