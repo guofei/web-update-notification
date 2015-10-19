@@ -14,6 +14,7 @@
 #
 
 require 'open-uri'
+require 'tempfile'
 require 'digest/md5'
 require 'addressable/uri'
 
