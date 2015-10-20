@@ -15,6 +15,7 @@
 
 class User < ActiveRecord::Base
   has_many :pages, primary_key: 'channel', foreign_key: 'push_channel'
+  default_scope { order('created_at DESC') }
 
   def updated_recently
     updated_at > 10.days.ago
