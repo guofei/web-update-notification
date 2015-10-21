@@ -29,6 +29,14 @@ class Page < ActiveRecord::Base
     page.fetch_in_job
   end
 
+  class << self
+    def update_content
+      find_each do |page|
+        page.update_content
+      end
+    end
+  end
+
   def fetch_in_job
     return if is_stop_fetch?
     FetchWebpageJob.set(wait: second.seconds).perform_later(id)
@@ -62,6 +70,17 @@ class Page < ActiveRecord::Base
     save
 
     push_to_devise
+  end
+
+  def update_content
+    uri = get_uri url
+    return if uri.nil?
+    new_content = get_content uri
+    return nil if new_content.nil?
+    new_digest = Digest::MD5.hexdigest(new_content)
+    self.content = new_content
+    self.digest = new_digest
+    save
   end
 
   private
@@ -109,12 +128,11 @@ class Page < ActiveRecord::Base
     doc = doc url
     return nil if doc.nil?
 
-    body = doc.xpath('//body')
-    if body.empty?
-      doc.text
-    else
-      body.text
+    text = ''
+    doc.traverse do |x|
+      text += x.text if x.text? && x.text !~ /^\s*$/
     end
+    text
   end
 
   # @param url URI or String
