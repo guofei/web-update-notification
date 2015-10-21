@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.take 50
+    @users = User.last 50
 
     render json: @users
   end

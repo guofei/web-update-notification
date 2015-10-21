@@ -37,7 +37,6 @@ gem 'connection_pool'
 gem 'redis-namespace'
 
 gem 'addressable', '~> 2.3.8'
-gem 'groupdate'
 
 gem 'nokogiri'
 
