@@ -31,7 +31,7 @@ gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 
 gem 'annotate'
 
-gem 'sidekiq'
+gem 'sidekiq', '~> 3.5', '>= 3.5.1'
 gem 'sinatra', :require => nil
 gem 'connection_pool'
 gem 'redis-namespace'
