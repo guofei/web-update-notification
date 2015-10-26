@@ -130,7 +130,7 @@ class Page < ActiveRecord::Base
 
     text = ''
     doc.traverse do |x|
-      text += x.text if x.text? && x.text !~ /^\s*$/
+      text += x.text if x.text? && x.text.scrub !~ /^\s*$/
     end
     # get txt file content
     text = doc.text if text.empty?
