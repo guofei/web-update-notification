@@ -88,6 +88,7 @@ class Page < ActiveRecord::Base
   def alert_data
     {
       sound: 'default',
+      url: url,
       alert: "#{url} has been updated"
     }
   end
