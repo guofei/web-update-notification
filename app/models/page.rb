@@ -89,6 +89,7 @@ class Page < ActiveRecord::Base
     {
       sound: 'default',
       url: url,
+      badge: 'Increment',
       alert: "#{url} has been updated"
     }
   end
