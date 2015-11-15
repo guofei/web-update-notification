@@ -31,6 +31,8 @@ gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 
 gem 'annotate'
 
+gem 'kaminari', '~> 0.16.3'
+
 gem 'sidekiq', '~> 3.5', '>= 3.5.1'
 gem 'sinatra', :require => nil
 gem 'connection_pool'

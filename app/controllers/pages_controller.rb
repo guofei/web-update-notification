@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     if params[:user_id]
       @pages = User.find(params[:user_id]).pages.where(stop_fetch: false)
     else
-      @pages = Page.all
+      @pages = Page.page params[:page]
     end
 
     render json: @pages
