@@ -139,7 +139,7 @@ class Page < ActiveRecord::Base
     doc.search('script').each do |script|
       script.content = ''
     end
-    doc.text
+    doc.text.scrub
   end
 
   # @param url URI or String
