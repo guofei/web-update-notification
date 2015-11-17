@@ -11,6 +11,7 @@
 #  updated_at   :datetime         not null
 #  push_channel :string
 #  stop_fetch   :boolean          default(FALSE)
+#  content_diff :text
 #
 
 require 'open-uri'
@@ -78,6 +79,7 @@ class Page < ActiveRecord::Base
     new_content = get_content uri
     return nil if new_content.nil?
     new_digest = Digest::MD5.hexdigest(new_content)
+    self.content_diff = diff new_content
     self.content = new_content
     self.digest = new_digest
     save
@@ -91,6 +93,11 @@ class Page < ActiveRecord::Base
       url: url,
       alert: "#{url} has been updated"
     }
+  end
+
+  def diff(new_content)
+    return '' if new_content.nil? || content.nil?
+    Diffy::Diff.new(new_content, content).to_s(:text)
   end
 
   def push_to_devise
@@ -129,13 +136,10 @@ class Page < ActiveRecord::Base
     doc = doc url
     return nil if doc.nil?
 
-    text = ''
-    doc.traverse do |x|
-      text += x.text.scrub if x.text? && x.text.scrub !~ /^\s*$/
+    doc.search('script').each do |script|
+      script.content = ''
     end
-    # get txt file content
-    text = doc.text if text.empty?
-    text
+    doc.text
   end
 
   # @param url URI or String
@@ -145,7 +149,7 @@ class Page < ActiveRecord::Base
     return nil if uri.nil?
 
     file = open(uri, 'User-Agent' => 'Googlebot/2.1')
-    doc = Nokogiri::HTML(file)
+    doc = Nokogiri::HTML(file, &:noblanks)
     file.close
     doc
   rescue
