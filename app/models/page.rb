@@ -33,7 +33,7 @@ class Page < ActiveRecord::Base
   class << self
     def update_content
       find_each do |page|
-        page.update_content
+        page.update_content if !page.stop_fetch
       end
     end
   end
