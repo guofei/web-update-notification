@@ -66,6 +66,7 @@ class Page < ActiveRecord::Base
 
     return if new_digest == digest
 
+    self.content_diff = diff new_content
     self.content = new_content
     self.digest = new_digest
     save
