@@ -39,6 +39,9 @@ module Crawlable
     doc.search('script').each do |script|
       script.content = ''
     end
+    doc.search('style').each do |style|
+      style.content = ''
+    end
     doc.text.scrub
   end
 
