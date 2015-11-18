@@ -58,8 +58,6 @@ class Page < ActiveRecord::Base
     push_to_devise if update_content
   end
 
-  private
-
   def update_content
     new_content = crawl
     return false if new_content.nil?
@@ -75,6 +73,8 @@ class Page < ActiveRecord::Base
 
     true
   end
+
+  private
 
   def alert_data
     {
