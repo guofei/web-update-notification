@@ -29,14 +29,6 @@ class Page < ActiveRecord::Base
     page.fetch_in_job
   end
 
-  class << self
-    def update_content
-      find_each do |page|
-        page.update_content if !page.stop_fetch
-      end
-    end
-  end
-
   def fetch_in_job
     return if is_stop_fetch?
     FetchWebpageJob.set(wait: second.seconds).perform_later(id)
