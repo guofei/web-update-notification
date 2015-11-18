@@ -78,7 +78,7 @@ class Page < ActiveRecord::Base
 
   def diff(new_content)
     return nil if new_content.nil? || content.nil?
-    Diffy::Diff.new(new_content, content).to_s(:text)
+    Diffy::Diff.new(new_content, content, context: 1).to_s(:text)
   end
 
   def push_to_devise
