@@ -6,7 +6,8 @@ class ReportsController < ApplicationController
       'users': User.where(created_at: 1.months.ago..Time.now).group('DATE(created_at)').count,
       'total pages': Page.count,
       'active pages': Page.where(stop_fetch: false).count,
-      'paid pages': Page.where('sec < ?', sec).count
+      'paid pages': Page.where('sec < ?', sec).count,
+      'paid active pages': Page.where('sec < ?', sec).where(stop_fetch: false).count
     }
 
     render json: report
