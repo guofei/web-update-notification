@@ -14,13 +14,13 @@ class PagesController < ApplicationController
   end
 
   def csv
-    render csv: send_data(Page.to_csv)
+    render csv: send_data(Page.to_csv) and return
   end
 
   # GET /pages/1
   # GET /pages/1.json
   def show
-    render json: @page and return
+    render json: @page
   end
 
   # POST /pages
