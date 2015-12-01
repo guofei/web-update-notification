@@ -5,9 +5,9 @@ class PagesController < ApplicationController
   # GET /pages.json
   def index
     if params[:user_id]
-      @pages = User.find(params[:user_id]).pages.where(stop_fetch: false)
+      @pages = User.order(:created_at).find(params[:user_id]).pages.where(stop_fetch: false)
     else
-      @pages = Page.page params[:page]
+      @pages = Page.order(:created_at).page params[:page]
     end
 
     render json: @pages
