@@ -12,6 +12,7 @@
 #  push_channel :string
 #  stop_fetch   :boolean          default(FALSE)
 #  content_diff :text
+#  title        :string
 #
 
 require 'test_helper'
