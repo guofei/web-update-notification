@@ -13,6 +13,11 @@ class PagesController < ApplicationController
     render json: @pages
   end
 
+  def csv
+    @pages = User.order(created_at: :desc).all
+    render csv: send_data(@pages.to_csv)
+  end
+
   # GET /pages/1
   # GET /pages/1.json
   def show

@@ -15,11 +15,21 @@
 #
 
 require 'digest/md5'
+require 'csv'
 
 class Page < ActiveRecord::Base
   include Crawlable
 
   belongs_to :user, primary_key: 'channel', foreign_key: 'push_channel'
+
+  def self.to_csv
+    CSV.generate do |csv|
+      csv << column_names
+      all.each do |model|
+        csv << model.attributes.values_at(*column_names)
+      end
+    end
+  end
 
   after_create do |page|
     page.fetch_in_job
