@@ -14,8 +14,7 @@ class PagesController < ApplicationController
   end
 
   def csv
-    @pages = User.order(created_at: :desc).all
-    render csv: send_data(@pages.to_csv)
+    render csv: send_data(Page.to_csv)
   end
 
   # GET /pages/1
