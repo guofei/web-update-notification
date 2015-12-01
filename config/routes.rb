@@ -9,7 +9,9 @@ Rails.application.routes.draw do
 
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
-  resources :pages, except: [:new, :edit]
+  resources :pages, except: [:new, :edit] do
+    get 'download', on: :collection
+  end
   resources :reports, only: [:index]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

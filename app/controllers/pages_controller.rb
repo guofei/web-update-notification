@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  include ActionController::MimeResponds
+
   before_action :set_page, only: [:show, :update, :destroy]
 
   # GET /pages
@@ -11,6 +13,12 @@ class PagesController < ApplicationController
     end
 
     render json: @pages
+  end
+
+  def download
+    respond_to do |format|
+      format.csv { send_data Page.to_csv }
+    end
   end
 
   # GET /pages/1
