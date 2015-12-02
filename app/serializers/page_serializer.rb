@@ -16,5 +16,5 @@
 #
 
 class PageSerializer < ActiveModel::Serializer
-  attributes :id, :url, :sec, :updated_at, :push_channel, :stop_fetch, :content_diff
+  attributes :id, :url, :title, :sec, :updated_at, :push_channel, :stop_fetch, :content_diff
 end
