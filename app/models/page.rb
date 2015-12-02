@@ -25,9 +25,10 @@ class Page < ActiveRecord::Base
 
   def self.to_csv
     CSV.generate do |csv|
-      csv << column_names
-      all.each do |model|
-        csv << model.attributes.values_at(*column_names)
+      all.each do |page|
+        csv << [page.id, page.url, page.title, page.sec,
+                page.push_channel, page.stop_fetch, page.created_at,
+                page.updated_at]
       end
     end
   end
@@ -62,7 +63,7 @@ class Page < ActiveRecord::Base
   end
 
   def update_content
-    new_content = crawl
+    new_title, new_content = crawl
     return false if new_content.nil?
 
     new_digest = Digest::MD5.hexdigest(new_content)
@@ -72,6 +73,7 @@ class Page < ActiveRecord::Base
     self.content_diff = new_diff if new_diff
     self.digest = new_digest
     self.content = new_content
+    self.title = new_title if new_title
     save
 
     true

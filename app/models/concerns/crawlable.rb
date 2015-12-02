@@ -15,7 +15,7 @@ module Crawlable
 
   # instance methods
   def crawl
-    get_content url
+    get_title_and_content url
   end
 
   private
@@ -32,7 +32,7 @@ module Crawlable
 
   # @param url URI or String
   # @return String
-  def get_content(url)
+  def get_title_and_content(url)
     doc = doc url
     return nil if doc.nil?
 
@@ -42,7 +42,7 @@ module Crawlable
     doc.search('style').each do |style|
       style.content = ''
     end
-    doc.text.scrub
+    [doc.title, doc.text.scrub]
   end
 
   # @param url URI or String
