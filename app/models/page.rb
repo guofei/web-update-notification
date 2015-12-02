@@ -34,14 +34,14 @@ class Page < ActiveRecord::Base
   end
 
   after_create do |page|
-    page.fetch_in_job
+    page.set_next_job
   end
 
   before_update if: :stop_fetch_changed? do |page|
-    page.fetch_in_job
+    page.set_next_job
   end
 
-  def fetch_in_job
+  def set_next_job
     return if is_stop_fetch?
     FetchWebpageJob.set(wait: second.seconds).perform_later(id)
   end
