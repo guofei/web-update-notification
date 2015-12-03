@@ -27,7 +27,7 @@ class Page < ActiveRecord::Base
   def self.to_csv
     CSV.generate do |csv|
       all.each do |page|
-        csv << [page.id, page.url, page.title, page.sec,
+        csv << [page.id, page.url, page.title, page.sec, page.second,
                 page.push_channel, page.stop_fetch, page.created_at,
                 page.updated_at]
       end
