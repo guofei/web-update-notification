@@ -18,6 +18,7 @@
 require 'digest/md5'
 require 'csv'
 
+# Page Info
 class Page < ActiveRecord::Base
   include Crawlable
 
@@ -33,28 +34,18 @@ class Page < ActiveRecord::Base
     end
   end
 
-  after_create do |page|
-    page.set_next_job
-  end
-
-  before_update if: :stop_fetch_changed? do |page|
-    page.set_next_job
-  end
+  after_create(&:set_next_job)
+  before_update(if: :stop_fetch_changed?, &:set_next_job)
 
   def set_next_job
-    return if is_stop_fetch?
+    return if stop_fetch?
     FetchWebpageJob.set(wait: second.seconds).perform_later(id)
   end
 
   def second
-    return nil if sec.nil?
-
     half_one_hour = 30 * 60
-    if sec < half_one_hour
-      half_one_hour
-    else
-      sec
-    end
+    update_time = 2.days.ago > updated_at ? 1.days.seconds : 0
+    [sec, update_time, half_one_hour].max
   end
 
   def fetch
@@ -96,15 +87,17 @@ class Page < ActiveRecord::Base
 
   def push_to_devise
     return nil if push_channel.nil? || push_channel.length <= 0
-    client = Parse.create application_id: Rails.application.secrets.parse_app_id,
-                          api_key: Rails.application.secrets.parse_api_key
+    client = Parse.create(
+      application_id: Rails.application.secrets.parse_app_id,
+      api_key: Rails.application.secrets.parse_api_key
+    )
     push = client.push(alert_data, push_channel)
     push.save
   rescue
     nil
   end
 
-  def is_stop_fetch?
+  def stop_fetch?
     return true if stop_fetch || sec.nil? || sec <= 0
 
     if user && user.updated_recently
