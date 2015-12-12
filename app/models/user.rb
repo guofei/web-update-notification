@@ -17,6 +17,6 @@ class User < ActiveRecord::Base
   has_many :pages, primary_key: 'channel', foreign_key: 'push_channel'
 
   def updated_recently
-    updated_at > 10.days.ago
+    updated_at > 60.days.ago
   end
 end
