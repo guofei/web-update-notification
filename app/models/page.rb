@@ -34,8 +34,8 @@ class Page < ActiveRecord::Base
     end
   end
 
-  after_create(&:set_next_job)
-  before_update(if: :stop_fetch_changed?, &:set_next_job)
+  after_create :set_next_job
+  before_update :set_next_job, if: :stop_fetch_changed?
 
   def set_next_job
     return if stop_fetch?

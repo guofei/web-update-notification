@@ -31,11 +31,6 @@ class PagesController < ApplicationController
   # POST /pages.json
   def create
     new_page = Page.new(page_params)
-    if page_params[:stop_fetch] == '0'
-      new_page.stop_fetch = false
-    else
-      new_page.stop_fetch = true
-    end
     @page = Page.find_by(url: new_page.url, push_channel: new_page.push_channel)
     if @page
       @page.sec = new_page.sec
