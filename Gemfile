@@ -43,4 +43,6 @@ gem 'addressable', '~> 2.3.8'
 gem 'nokogiri'
 gem 'diffy', '~> 3.0', '>= 3.0.7'
 
+gem 'newrelic_rpm'
+
 gem 'parse-ruby-client', git: 'https://github.com/adelevie/parse-ruby-client.git'
