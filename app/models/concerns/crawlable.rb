@@ -1,3 +1,4 @@
+require 'timeout'
 require 'open-uri'
 require 'tempfile'
 require 'addressable/uri'
@@ -5,6 +6,8 @@ require 'addressable/uri'
 # crawl web page module
 # must have url(:string)
 module Crawlable
+  TIME_OUT = 60
+
   def self.included(base)
     base.extend ClassMethods
   end
@@ -51,7 +54,10 @@ module Crawlable
     uri = get_uri url
     return nil if uri.nil?
 
-    file = open(uri, 'User-Agent' => 'Googlebot/2.1')
+    file = nil
+    timeout(TIME_OUT) do
+      file = open(uri, 'User-Agent' => 'Googlebot/2.1')
+    end
     doc = Nokogiri::HTML(file, &:noblanks)
     file.close
     doc
