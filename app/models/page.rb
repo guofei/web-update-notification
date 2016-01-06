@@ -44,8 +44,8 @@ class Page < ActiveRecord::Base
 
   def second
     half_one_hour = 30 * 60
-    three_minute
-    min_time = update_ago?(1.hours.ago) ? half_one_hour : three_minute
+    three_minute = 3 * 60
+    min_time = update_ago?(10.minutes.ago) ? half_one_hour : three_minute
     update_time = update_ago?(2.days.ago) ? 1.days.seconds : 0
     [sec, update_time, min_time].max
   end
