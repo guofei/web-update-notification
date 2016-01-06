@@ -44,8 +44,10 @@ class Page < ActiveRecord::Base
 
   def second
     half_one_hour = 30 * 60
-    update_time = 2.days.ago > updated_at ? 1.days.seconds : 0
-    [sec, update_time, half_one_hour].max
+    three_minute
+    min_time = update_ago?(1.hours.ago) ? half_one_hour : three_minute
+    update_time = update_ago?(2.days.ago) ? 1.days.seconds : 0
+    [sec, update_time, min_time].max
   end
 
   def fetch
@@ -83,6 +85,10 @@ class Page < ActiveRecord::Base
   def diff(new_content)
     return nil if new_content.nil? || content.nil?
     Diffy::Diff.new(new_content, content, context: 1).to_s(:text)
+  end
+
+  def update_ago?(time_ago)
+    time_ago > update_at
   end
 
   def push_to_devise
