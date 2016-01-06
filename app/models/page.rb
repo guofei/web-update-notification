@@ -88,7 +88,7 @@ class Page < ActiveRecord::Base
   end
 
   def update_ago?(time_ago)
-    time_ago > update_at
+    time_ago > updated_at
   end
 
   def push_to_devise
