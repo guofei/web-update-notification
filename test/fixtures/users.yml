@@ -17,8 +17,8 @@
 
 one:
   name: MyString
-  channel: MyString
+  channel: MyString1
 
 two:
   name: MyString
-  channel: MyString
+  channel: MyString2

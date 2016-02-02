@@ -19,14 +19,12 @@
 
 one:
   content: MyText
-  hash: MyString
-  uri: MyString
-  uuid: MyString
+  url: MyString
   sec: 1
+  push_channel: abc
 
 two:
   content: MyText
-  hash: MyString
-  uri: MyString
-  uuid: MyString
+  url: MyString
   sec: 1
+  push_channel: def
