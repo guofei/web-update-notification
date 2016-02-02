@@ -20,12 +20,12 @@ require 'test_helper'
 class PageTest < ActiveSupport::TestCase
   test 'sec 60s, updated at 4 minutes ago' do
     page = Page.new(sec: 60, updated_at: 4.minutes.ago)
-    assert_equal(3.minutes.seconds, page.second)
+    assert_equal(4.minutes.seconds, page.second)
   end
 
   test 'sec 60s, updated at 10 minutes ago' do
     page = Page.new(sec: 60, updated_at: 10.minutes.ago)
-    assert_equal(15.minutes.seconds, page.second)
+    assert_equal(10.minutes.seconds, page.second)
   end
 
   test 'sec 60s, updated at 20 minutes ago' do

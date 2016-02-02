@@ -43,11 +43,7 @@ class Page < ActiveRecord::Base
   end
 
   def second
-    a_quarter = 15 * 60
-    three_minute = 3 * 60
-    min_time = update_ago?(10.minutes.ago) ? a_quarter : three_minute
-    update_time = update_ago?(2.days.ago) ? 1.days.seconds : 0
-    [sec, update_time, min_time].max
+    [min_check_time, sec].max
   end
 
   def fetch
@@ -89,6 +85,22 @@ class Page < ActiveRecord::Base
 
   def update_ago?(time_ago)
     time_ago > updated_at
+  end
+
+  def min_check_time
+    if sec < 20.minutes.seconds
+      [last_check_time, 15.minutes.seconds].min
+    elsif sec < 2.hours.seconds
+      [last_check_time, 1.hours.seconds].min
+    elsif sec < 2.days.seconds
+      [last_check_time, 1.days.seconds].min
+    else
+      [last_check_time, 2.days.seconds].min
+    end
+  end
+
+  def last_check_time
+    (Time.zone.now - updated_at).to_i
   end
 
   def push_to_devise
