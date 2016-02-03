@@ -41,7 +41,7 @@ gem 'redis-namespace'
 gem 'addressable', '~> 2.3.8'
 
 gem 'nokogiri'
-gem 'diffy', '~> 3.0', '>= 3.0.7'
+gem 'diffy', '~> 3.1'
 
 gem 'newrelic_rpm'
 

@@ -80,7 +80,7 @@ class Page < ActiveRecord::Base
 
   def diff(new_content)
     return nil if new_content.nil? || content.nil?
-    Diffy::Diff.new(new_content, content, context: 1).to_s(:text)
+    Diffy::Diff.new(content, new_content, context: 1).to_s(:text)
   end
 
   def update_ago?(time_ago)
@@ -89,13 +89,25 @@ class Page < ActiveRecord::Base
 
   def min_check_time
     if sec < 20.minutes.seconds
-      [last_check_time, 15.minutes.seconds].min
+      if update_ago?(3.days.ago)
+        [last_check_time, 1.hours.seconds].min
+      else
+        [last_check_time, 20.minutes.seconds].min
+      end
     elsif sec < 2.hours.seconds
-      [last_check_time, 1.hours.seconds].min
-    elsif sec < 2.days.seconds
-      [last_check_time, 1.days.seconds].min
+      if update_ago?(3.days.ago)
+        [last_check_time, 6.hours.seconds].min
+      else
+        [last_check_time, 1.hours.seconds].min
+      end
+    elsif sec < 1.days.seconds
+      if update_ago?(3.days.ago)
+        [last_check_time, 2.days.seconds].min
+      else
+        [last_check_time, 1.days.seconds].min
+      end
     else
-      [last_check_time, 2.days.seconds].min
+      [last_check_time, 3.days.seconds].min
     end
   end
 
