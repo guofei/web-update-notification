@@ -56,7 +56,8 @@ module Crawlable
 
     file = nil
     timeout(TIME_OUT) do
-      file = open(uri, 'User-Agent' => 'Googlebot/2.1')
+      user_agent = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)'
+      file = open(uri, 'User-Agent' => user_agent)
     end
     doc = Nokogiri::HTML(file, &:noblanks)
     file.close
