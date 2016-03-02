@@ -45,7 +45,7 @@ module Crawlable
     doc.search('style').each do |style|
       style.content = ''
     end
-    [doc.title, doc.text.scrub]
+    [doc.title.scrub, doc.text.scrub]
   end
 
   # @param url URI or String
