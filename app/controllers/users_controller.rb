@@ -66,6 +66,11 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :channel)
+      params.require(:user).permit(:name,
+                                   :channel,
+                                   :device_token,
+                                   :device_type,
+                                   :locale_identifier,
+                                   :time_zone)
     end
 end
