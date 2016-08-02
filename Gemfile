@@ -45,4 +45,5 @@ gem 'diffy', '~> 3.1'
 
 gem 'newrelic_rpm'
 
+gem 'aws-sdk', '~> 2'
 gem 'parse-ruby-client', git: 'https://github.com/adelevie/parse-ruby-client.git'
