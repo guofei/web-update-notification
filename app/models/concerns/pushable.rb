@@ -1,3 +1,5 @@
+require 'aws-sdk'
+
 module Pushable
   # instance methods
 
@@ -25,5 +27,16 @@ module Pushable
   end
 
   def push_to_devise
+  end
+
+  private
+
+  def sns_client
+    sns = AWS::SNS.new(
+      access_key_id: Rails.application.secrets.aws_access_key_id,
+      secret_access_key: Rails.application.secrets.aws_secret_access_key,
+      region: Rails.application.secrets.aws_region
+    )
+    sns.client
   end
 end
