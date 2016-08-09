@@ -23,13 +23,33 @@ module Pushable
   #     call set endpoint attributes to set the latest device token and then enable the platform endpoint
   #   endif
   # endif
-  def regist(token)
+  def regist
+    create_endpoint if self.endpoint_arn.nil?
+    resp = client.get_endpoint_attributes(endpoint_arn: self.endpoint_arn)
+    # TODO
+  rescue Aws::SNS::Errors::NotFoundException => _
+    create_endpoint
   end
 
   def push_to_devise
   end
 
   private
+
+  def create_endpoint
+    response = sns_client.create_platform_endpoint(
+      platform_application_arn: application_arn,
+      token: self.device_token
+    )
+    self.endpoint_arn = response[:endpoint_arn]
+    self.save
+  rescue => e
+    result = e.message.match(/Endpoint(.*)already/)
+    if result.present?
+      self.endpoint_arn = result[1].strip
+      self.save
+    end
+  end
 
   def sns_client
     sns = AWS::SNS.new(
@@ -38,5 +58,9 @@ module Pushable
       region: Rails.application.secrets.aws_region
     )
     sns.client
+  end
+
+  def application_arn
+    Rails.application.secrets.aws_application_arn
   end
 end
