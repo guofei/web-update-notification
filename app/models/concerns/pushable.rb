@@ -25,8 +25,14 @@ module Pushable
   # endif
   def regist
     create_endpoint if self.endpoint_arn.nil?
-    resp = client.get_endpoint_attributes(endpoint_arn: self.endpoint_arn)
-    # TODO
+    resp = sns_client.get_endpoint_attributes(endpoint_arn: self.endpoint_arn)
+    if resp.attributes['Token'] != self.device_token ||
+       resp.attributes['Enabled'] != 'true'
+      sns_client.set_endpoint_attributes(
+        endpoint_arn: self.endpoint_arn,
+        attributes: { Token: self.device_token, Enabled: 'true' }
+      )
+    end
   rescue Aws::SNS::Errors::NotFoundException => _
     create_endpoint
   end
