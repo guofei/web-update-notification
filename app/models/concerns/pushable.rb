@@ -24,20 +24,27 @@ module Pushable
   #   endif
   # endif
   def regist
-    create_endpoint if self.endpoint_arn.nil?
-    resp = sns_client.get_endpoint_attributes(endpoint_arn: self.endpoint_arn)
-    if resp.attributes['Token'] != self.device_token ||
+    create_endpoint if endpoint_arn.nil?
+    resp = sns_client.get_endpoint_attributes(endpoint_arn: endpoint_arn)
+    if resp.attributes['Token'] != device_token ||
        resp.attributes['Enabled'] != 'true'
       sns_client.set_endpoint_attributes(
-        endpoint_arn: self.endpoint_arn,
-        attributes: { Token: self.device_token, Enabled: 'true' }
+        attributes: { Token: device_token, Enabled: 'true' },
+        endpoint_arn: endpoint_arn
       )
     end
   rescue Aws::SNS::Errors::NotFoundException => _
     create_endpoint
   end
 
-  def push_to_devise
+  def push_to_devise(json_data)
+    sns_client.publish(
+      target_arn: endpoint_arn,
+      message: json_data,
+      message_structure: 'json'
+    )
+  rescue AWS::SNS::Errors::EndpointDisabled
+    stop_fetch
   end
 
   private
@@ -45,15 +52,15 @@ module Pushable
   def create_endpoint
     response = sns_client.create_platform_endpoint(
       platform_application_arn: application_arn,
-      token: self.device_token
+      token: device_token
     )
     self.endpoint_arn = response[:endpoint_arn]
-    self.save
+    save
   rescue => e
     result = e.message.match(/Endpoint(.*)already/)
     if result.present?
       self.endpoint_arn = result[1].strip
-      self.save
+      save
     end
   end
 

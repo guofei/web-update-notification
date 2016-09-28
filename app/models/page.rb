@@ -71,11 +71,12 @@ class Page < ActiveRecord::Base
   private
 
   def alert_data
+    data <<-EOD
     {
-      sound: 'default',
-      url: url,
-      alert: "#{url} has been updated"
+      "sound": "default",
+      "alert": "#{url} has been updated"
     }
+    EOD
   end
 
   def diff(new_content)
@@ -116,13 +117,7 @@ class Page < ActiveRecord::Base
   end
 
   def push_to_devise
-    return nil if push_channel.nil? || push_channel.length <= 0
-    client = Parse.create(
-      application_id: Rails.application.secrets.parse_app_id,
-      api_key: Rails.application.secrets.parse_api_key
-    )
-    push = client.push(alert_data, push_channel)
-    push.save
+    user.push_to_devise(alert_data)
   rescue
     nil
   end

@@ -24,4 +24,11 @@ class User < ActiveRecord::Base
   def updated_recently
     updated_at > 60.days.ago
   end
+
+  def stop_fetch
+    pages.each do |page|
+      page.stop_fetch = true
+      page.save
+    end
+  end
 end
