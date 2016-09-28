@@ -48,7 +48,7 @@ class Page < ActiveRecord::Base
 
   def fetch
     return if stop_fetch
-    push_to_devise if update_content
+    push_to_device if update_content
   end
 
   def update_content
@@ -116,8 +116,8 @@ class Page < ActiveRecord::Base
     (Time.zone.now - updated_at).to_i
   end
 
-  def push_to_devise
-    user.push_to_devise(alert_data)
+  def push_to_device
+    user.push_to_device(alert_data)
   rescue
     nil
   end

@@ -37,7 +37,7 @@ module Pushable
     create_endpoint
   end
 
-  def push_to_devise(json_data)
+  def push_to_device(json_data)
     sns_client.publish(
       target_arn: endpoint_arn,
       message: json_data,
