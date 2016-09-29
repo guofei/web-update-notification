@@ -15,6 +15,7 @@
 #  title        :string
 #
 
+require 'json'
 require 'digest/md5'
 require 'csv'
 
@@ -71,12 +72,11 @@ class Page < ActiveRecord::Base
   private
 
   def alert_data
-    data <<-EOD
-    {
-      "sound": "default",
-      "alert": "#{url} has been updated"
+    data = {
+      sound: 'default',
+      alert: "#{url} has been updated"
     }
-    EOD
+    data.to_json
   end
 
   def diff(new_content)
