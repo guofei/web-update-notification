@@ -72,11 +72,15 @@ class Page < ActiveRecord::Base
   private
 
   def alert_data
-    data = {
-      sound: 'default',
-      alert: "#{url} has been updated"
+    message = "#{url} has been updated"
+    apns_data = {
+      aps: {
+        sound: 'default',
+        alert: message,
+        url: url
+      }
     }
-    data.to_json
+    { default: message, APNS: apns_data.to_json }.to_json
   end
 
   def diff(new_content)
