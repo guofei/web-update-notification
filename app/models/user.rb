@@ -19,6 +19,7 @@
 #
 
 class User < ActiveRecord::Base
+  include Pushable
   has_many :pages, primary_key: 'channel', foreign_key: 'push_channel'
 
   def updated_recently

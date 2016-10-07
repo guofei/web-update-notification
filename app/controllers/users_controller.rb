@@ -21,10 +21,12 @@ class UsersController < ApplicationController
     new_user = User.new(user_params)
     @user = User.find_by(channel: new_user.channel)
     if @user
+      @user.regist
       render json: @user, status: :created, location: @user
     else
       @user = new_user
       if @user.save
+        @user.regist
         render json: @user, status: :created, location: @user
       else
         render json: @user.errors, status: :unprocessable_entity

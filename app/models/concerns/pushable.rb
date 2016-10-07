@@ -20,18 +20,16 @@ module Pushable
   # else
   #   if (the device token in the endpoint does not match the latest one) or
   #     (get endpoint attributes shows the endpoint as disabled)
-  #     call set endpoint attributes to set the latest device token and then enable the platform endpoint
+  #     call set endpoint attributes to set the latest device token
+  #     and then enable the platform endpoint
   #   endif
   # endif
   def regist
+    return if device_token.nil?
     create_endpoint if endpoint_arn.nil?
     resp = sns_client.get_endpoint_attributes(endpoint_arn: endpoint_arn)
-    if resp.attributes['Token'] != device_token ||
-       resp.attributes['Enabled'] != 'true'
-      sns_client.set_endpoint_attributes(
-        attributes: { Token: device_token, Enabled: 'true' },
-        endpoint_arn: endpoint_arn
-      )
+    if need_update_attributes?(resp, device_token)
+      update_attributes(device_token, endpoint_arn)
     end
   rescue Aws::SNS::Errors::NotFoundException => _
     create_endpoint
@@ -50,30 +48,43 @@ module Pushable
   private
 
   def create_endpoint
-    response = sns_client.create_platform_endpoint(
-      platform_application_arn: application_arn,
-      token: device_token
-    )
-    self.endpoint_arn = response[:endpoint_arn]
+    endpoint = get_endpoint(device_token)
+    return if endpoint.nil?
+    self.endpoint_arn = endpoint
     save
+  end
+
+  def get_endpoint(token)
+    response = sns_client.create_platform_endpoint(
+      platform_application_arn: application_arn, token: token)
+    response[:endpoint_arn]
   rescue => e
     result = e.message.match(/Endpoint(.*)already/)
-    if result.present?
-      self.endpoint_arn = result[1].strip
-      save
-    end
+    result[1].strip if result.present?
+    nil
   end
 
   def sns_client
     sns = AWS::SNS.new(
       access_key_id: Rails.application.secrets.aws_access_key_id,
-      secret_access_key: Rails.application.secrets.aws_secret_access_key,
-      region: Rails.application.secrets.aws_region
+      secret_access_key: Rails.application.secrets.aws_secret_access_key
     )
     sns.client
   end
 
   def application_arn
     Rails.application.secrets.aws_application_arn
+  end
+
+  def need_update_attributes?(resp, token)
+    resp.attributes['Token'] != token ||
+      resp.attributes['Enabled'] != 'true'
+  end
+
+  def update_attributes(token, endpoint)
+    sns_client.set_endpoint_attributes(
+      attributes: { Token: token, Enabled: 'true' },
+      endpoint_arn: endpoint
+    )
   end
 end
