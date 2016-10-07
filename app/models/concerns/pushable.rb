@@ -31,8 +31,10 @@ module Pushable
     if need_update_attributes?(resp, device_token)
       update_attributes(device_token, endpoint_arn)
     end
+    enable
   rescue Aws::SNS::Errors::NotFoundException => _
     create_endpoint
+    enable
   end
 
   def push_to_device(json_data)

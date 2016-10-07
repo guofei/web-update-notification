@@ -27,6 +27,13 @@ class User < ActiveRecord::Base
     updated_at > 60.days.ago
   end
 
+  private
+
+  def enable
+    self.enabled = true
+    save
+  end
+
   def disable
     self.enabled = false
     save

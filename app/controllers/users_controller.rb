@@ -21,6 +21,10 @@ class UsersController < ApplicationController
     new_user = User.new(user_params)
     @user = User.find_by(channel: new_user.channel)
     if @user
+      if new_user.device_token && new_user.device_token != @user.device_token
+        @user.device_token = new_user.device_token
+        @user.save
+      end
       @user.regist
       render json: @user, status: :created, location: @user
     else
