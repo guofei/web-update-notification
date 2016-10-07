@@ -12,6 +12,7 @@
 #  locale_identifier :string
 #  time_zone         :string
 #  endpoint_arn      :string
+#  enabled           :boolean          default(TRUE)
 #
 # Indexes
 #

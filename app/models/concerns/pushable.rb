@@ -42,7 +42,7 @@ module Pushable
       message_structure: 'json'
     )
   rescue AWS::SNS::Errors::EndpointDisabled
-    stop_fetch
+    disable
   end
 
   private
@@ -65,11 +65,11 @@ module Pushable
   end
 
   def sns_client
-    sns = AWS::SNS.new(
+    Aws::SNS::Client.new(
       access_key_id: Rails.application.secrets.aws_access_key_id,
-      secret_access_key: Rails.application.secrets.aws_secret_access_key
+      secret_access_key: Rails.application.secrets.aws_secret_access_key,
+      region: Rails.application.secrets.aws_region
     )
-    sns.client
   end
 
   def application_arn

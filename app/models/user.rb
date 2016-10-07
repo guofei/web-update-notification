@@ -12,6 +12,7 @@
 #  locale_identifier :string
 #  time_zone         :string
 #  endpoint_arn      :string
+#  enabled           :boolean          default(TRUE)
 #
 # Indexes
 #
@@ -26,10 +27,8 @@ class User < ActiveRecord::Base
     updated_at > 60.days.ago
   end
 
-  def stop_fetch
-    pages.each do |page|
-      page.stop_fetch = true
-      page.save
-    end
+  def disable
+    self.enabled = false
+    save
   end
 end

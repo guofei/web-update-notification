@@ -129,7 +129,7 @@ class Page < ActiveRecord::Base
   def stop_fetch?
     return true if stop_fetch || sec.nil? || sec <= 0
 
-    if user && user.updated_recently
+    if user && user.enabled
       return false
     else
       return true
