@@ -22,4 +22,10 @@ namespace :parse do
       end
     end
   end
+
+  task regist: :environment do
+    User.find_each do |user|
+      user.regist
+    end
+  end
 end
