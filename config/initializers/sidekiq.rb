@@ -10,3 +10,5 @@ end
 Sidekiq.configure_server do |config|
   config.redis = ConnectionPool.new(size: 25, &redis_conn)
 end
+
+Sidekiq::Logging.logger.level = Logger::WARN
