@@ -1,5 +1,5 @@
 namespace :jobs do
-  task restart: :environment do
+  task init: :environment do
     Page.find_each(&:set_next_job)
   end
 end
