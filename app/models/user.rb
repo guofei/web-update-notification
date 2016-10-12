@@ -32,6 +32,9 @@ class User < ActiveRecord::Base
   def enable
     self.enabled = true
     save
+    pages.each do |pg|
+      pg.set_next_job unless pg.stop_fetch
+    end
   end
 
   def disable
