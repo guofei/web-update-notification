@@ -43,7 +43,7 @@ module Pushable
       message: json_data,
       message_structure: 'json'
     )
-  rescue AWS::SNS::Errors::EndpointDisabled
+  rescue Aws::SNS::Errors::EndpointDisabledException
     disable
   end
 
