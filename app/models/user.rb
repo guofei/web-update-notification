@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   private
 
   def enable
+    return if enabled
     self.enabled = true
     save
     pages.each do |pg|
