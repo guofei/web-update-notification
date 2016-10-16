@@ -25,8 +25,8 @@ module Pushable
   #   endif
   # endif
   def regist
-    return if device_token.nil?
-    create_endpoint if endpoint_arn.nil?
+    return if device_token.blank?
+    create_endpoint if endpoint_arn.blank?
     resp = sns_client.get_endpoint_attributes(endpoint_arn: endpoint_arn)
     if need_update_attributes?(resp, device_token)
       update_attributes(device_token, endpoint_arn)
