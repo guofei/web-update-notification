@@ -92,9 +92,15 @@ class Page < ActiveRecord::Base
     time_ago > updated_at
   end
 
+  def created_ago?(time_ago)
+    time_ago > created_at
+  end
+
   def min_check_time
     if sec < 20.minutes.seconds
-      if update_ago?(3.days.ago)
+      if !created_ago?(2.days.ago)
+        sec
+      elsif update_ago?(3.days.ago)
         [last_check_time, 1.hours.seconds].min
       else
         [last_check_time, 20.minutes.seconds].min
