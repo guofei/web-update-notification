@@ -3,7 +3,7 @@ namespace :sidekiq do
   task(:start) do
     config = Rails.root.join('config', 'sidekiq.yml')
     env    = ENV['RAILS_ENV'] || 'development'
-    `bundle exec sidekiq -C #{config} -e #{env}`
+    `bundle exec sidekiq -C #{config} -d -e #{env}`
   end
 
   desc 'stop sidekiq'
