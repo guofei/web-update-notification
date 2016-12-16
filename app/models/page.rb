@@ -75,9 +75,10 @@ class Page < ActiveRecord::Base
     message = "#{url} has been updated"
     apns_data = {
       aps: {
-        sound: 'default',
-        alert: message,
-        url: url
+        'sound': 'default',
+        'alert': message,
+        'content-available': 1,
+        'url': url
       }
     }
     { default: message, APNS: apns_data.to_json }.to_json
