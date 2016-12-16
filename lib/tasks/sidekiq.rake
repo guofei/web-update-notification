@@ -7,7 +7,7 @@ namespace :sidekiq do
   end
 
   desc 'stop sidekiq'
-  task(:start) do
+  task(:stop) do
     pid = Rails.root.join('tmp/pids', 'sidekiq.pid')
     env = ENV['RAILS_ENV'] || 'development'
     `bundle exec sidekiqctl stop #{pid} 60 -e #{env}`
