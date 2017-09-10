@@ -9,7 +9,7 @@ gem 'spring', :group => :development
 
 
 gem 'pg'
-gem 'puma'
+gem 'puma', '~> 3.10'
 gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 
 
@@ -46,4 +46,3 @@ gem 'diffy', '~> 3.1'
 gem 'newrelic_rpm'
 
 gem 'aws-sdk', '~> 2'
-gem 'parse-ruby-client', git: 'https://github.com/adelevie/parse-ruby-client.git'
