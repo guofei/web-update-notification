@@ -47,6 +47,11 @@ class Page < ActiveRecord::Base
     [min_check_time, sec].max
   end
 
+  def fetch_without_push
+    return if stop_fetch?
+    update_content
+  end
+
   def fetch
     return if stop_fetch
     push_to_device if update_content

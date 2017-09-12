@@ -2,9 +2,9 @@ namespace :pages do
   desc 'fetch all pages'
   task fetch: :environment do
     Page.find_each do |page|
-      unless page.stop_fetch
+      if page.fetch_without_push
         p page.id
-        page.update_content
+        puts page.title
       end
     end
   end
