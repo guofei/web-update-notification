@@ -40,9 +40,10 @@ gem 'redis-namespace'
 
 gem 'addressable', '~> 2.3.8'
 
-gem 'nokogiri'
 gem 'diffy', '~> 3.1'
+gem 'nokogiri'
 
 gem 'newrelic_rpm'
 
 gem 'aws-sdk', '~> 2'
+gem 'faraday', '~> 0.13.1'
