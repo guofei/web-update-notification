@@ -9,7 +9,7 @@ gem 'spring', :group => :development
 
 
 gem 'pg'
-gem 'puma', '~> 3.10'
+gem 'puma', '~> 3.4'
 gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 
 

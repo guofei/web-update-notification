@@ -177,7 +177,7 @@ DEPENDENCIES
   newrelic_rpm
   nokogiri
   pg
-  puma (~> 3.10)
+  puma (~> 3.4)
   rails (= 4.2.4)
   rails-api
   redis-namespace

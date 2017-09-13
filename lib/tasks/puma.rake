@@ -7,22 +7,26 @@ namespace :puma do
   end
 
   desc "Halt puma"
-  task(:halt) { puts `bundle exec pumactl -p #{puma_pid} restart` }
+  task(:halt) { puts `bundle exec pumactl -P #{pidfile} restart` }
 
   desc "Restart puma"
-  task(:restart) { puts `bundle exec pumactl -p #{puma_pid} restart` }
+  task(:restart) { puts `bundle exec pumactl -P #{pidfile} restart` }
 
   desc "Phased-restart puma"
-  task(:phased_restart) { puts `bundle exec pumactl -p #{puma_pid} phased-restart` }
+  task(:phased_restart) { puts `bundle exec pumactl -P #{pidfile} phased-restart` }
 
   desc "Stats puma"
-  task(:stats) { puts `bundle exec pumactl -p #{puma_pid} stats` }
+  task(:stats) { puts `bundle exec pumactl -P #{pidfile} stats` }
 
   desc "Status puma"
-  task(:status) { puts `bundle exec pumactl -p #{puma_pid} status` }
+  task(:status) { puts `bundle exec pumactl -P #{pidfile} status` }
 
   desc "Stop puma"
-  task(:stop) { puts `bundle exec pumactl -p #{puma_pid} stop` }
+  task(:stop) { puts `bundle exec pumactl -P #{pidfile} stop` }
+
+  def pidfile
+    Rails.root.join("tmp", "pids", "puma.pid")
+  end
 
   def puma_pid
     begin
