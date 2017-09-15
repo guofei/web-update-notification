@@ -44,10 +44,12 @@ module Crawlable
 
   # @param url String
   # @return String
-  def get_title_and_content_by_node_api(url)
+  def get_title_and_content_by_node_api(url_param)
     host = Rails.application.secrets.crawler_api_host
-    uri = get_uri("#{host}/api/articles?url=#{url}")
-    res = Faraday.get uri.to_s
+    uri = get_uri(url_param)
+    return nil if uri.nil?
+    url = "#{host}/api/articles?url=#{uri}"
+    res = Faraday.get url
     if res.status == 200
       json = JSON.parse(res.body)
       title = json['title']
