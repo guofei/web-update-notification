@@ -54,7 +54,12 @@ class Page < ActiveRecord::Base
 
   def fetch
     return if stop_fetch
-    push_to_device if update_content
+    if content.blank?
+      update_content
+    else
+      # update content and push to device
+      push_to_device if update_content
+    end
   end
 
   def update_content
