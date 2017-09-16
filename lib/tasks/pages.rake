@@ -24,6 +24,7 @@ namespace :pages do
 
   task clean_content: :environment do
     Page.find_each do |page|
+      next if page.content.nil?
       page.content = nil
       page.save
     end
