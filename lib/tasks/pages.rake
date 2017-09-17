@@ -22,6 +22,16 @@ namespace :pages do
     end
   end
 
+  task stop_fetch_for_null_title: :environment do
+    Page.find_each do |page|
+      if page.title.nil?
+        p page.id
+        page.stop_fetch = true
+        page.save
+      end
+    end
+  end
+
   task clean_content: :environment do
     Page.find_each do |page|
       next if page.content.nil?
