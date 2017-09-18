@@ -24,7 +24,7 @@ namespace :pages do
 
   task stop_fetch_for_null_title: :environment do
     Page.find_each do |page|
-      if page.title.nil?
+      if page.title.nil? && page.stop_fetch == false
         p page.id
         page.stop_fetch = true
         page.save

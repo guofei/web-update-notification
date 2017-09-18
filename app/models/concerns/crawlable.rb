@@ -50,15 +50,22 @@ module Crawlable
     return nil if uri.nil?
     url = "#{host}/api/articles?url=#{uri}"
     res = Faraday.get url
-    if res.status == 200
-      json = JSON.parse(res.body)
-      title = json['title']
-      text = json['text']
-      return [title, text]
+    return get_title_and_content_by_res(res) if res.status == 200
+    if res.status == 302
+      location = res.headers['location']
+      return nil if url == location
+      res = Faraday.get location
+      return get_title_and_content_by_res(res) if res.status == 200
     end
-    nil
   rescue
     nil
+  end
+
+  def get_title_and_content_by_res(res)
+    json = JSON.parse(res.body)
+    title = json['title']
+    text = json['text']
+    [title, text]
   end
 
   # @param url URI or String
