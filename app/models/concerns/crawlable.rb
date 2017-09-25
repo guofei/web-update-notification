@@ -51,12 +51,6 @@ module Crawlable
     url = "#{host}/api/articles?url=#{uri}"
     res = Faraday.get url
     return get_title_and_content_by_res(res) if res.status == 200
-    if res.status == 302
-      location = res.headers['location']
-      return nil if url == location
-      res = Faraday.get location
-      return get_title_and_content_by_res(res) if res.status == 200
-    end
   rescue
     nil
   end
