@@ -22,6 +22,7 @@ require 'csv'
 # Page Info
 class Page < ActiveRecord::Base
   include Crawlable
+  JUMP = false
 
   belongs_to :user, primary_key: 'channel', foreign_key: 'push_channel'
 
@@ -53,6 +54,7 @@ class Page < ActiveRecord::Base
   end
 
   def fetch
+    return if JUMP
     return if stop_fetch
     if content.blank?
       update_content
