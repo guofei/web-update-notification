@@ -59,11 +59,11 @@ module Crawlable
     json = JSON.parse(res.body)
     title = json['title']
     text = json['text']
-    [title, text_filter(text)]
+    [title, multiline_squish(text)]
   end
 
-  def text_filter(text)
-    text.lines.collect(&:strip).reject(&:empty?).join("\n")
+  def multiline_squish(text)
+    text.lines.collect(&:squish).reject(&:empty?).join("\n")
   end
 
   # @param url URI or String
