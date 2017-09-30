@@ -63,7 +63,7 @@ module Crawlable
   end
 
   def text_filter(text)
-    text.delete(' ').lines.collect(&:chomp).reject(&:empty?).join("\n")
+    text.lines.collect(&:strip).reject(&:empty?).join("\n")
   end
 
   # @param url URI or String
