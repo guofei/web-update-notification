@@ -10,8 +10,8 @@ require 'json'
 # crawl web page module
 # must have url(:string)
 module Crawlable
-  TIME_OUT = 60
-  USE_API = true
+  TIME_OUT = 30
+  USE_API = false
 
   def self.included(base)
     base.extend ClassMethods
