@@ -1,17 +1,14 @@
 source 'https://rubygems.org'
 
-
-gem 'rails', '4.2.4'
+gem 'rails', '~> 4.2', '>= 4.2.10'
 
 gem 'rails-api'
 
-gem 'spring', :group => :development
+gem 'spring', group: :development
 
-
-gem 'pg'
+gem 'active_model_serializers', '~> 0.10.0'
+gem 'pg', '~> 0.20.0'
 gem 'puma', '~> 3.4'
-gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
-
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -28,13 +25,12 @@ gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-
 gem 'annotate'
 
 gem 'kaminari', '~> 0.16.3'
 
 gem 'sidekiq', '~> 3.5', '>= 3.5.1'
-gem 'sinatra', :require => nil
+gem 'sinatra', require: nil
 gem 'connection_pool'
 gem 'redis-namespace'
 

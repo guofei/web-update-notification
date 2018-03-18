@@ -90,7 +90,7 @@ module Crawlable
     return nil if uri.nil?
 
     file = nil
-    timeout(TIME_OUT) do
+    Timeout.timeout(TIME_OUT) do
       user_agent = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)'
       file = open(uri, 'User-Agent' => user_agent)
     end
