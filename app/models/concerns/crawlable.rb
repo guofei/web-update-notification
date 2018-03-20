@@ -97,6 +97,11 @@ module Crawlable
     doc = Nokogiri::HTML(file, &:noblanks)
     file.close
     doc
+  rescue OpenURI::HTTPError => e
+    file.close if file.class == Tempfile
+    status = e.io.status.first
+    raise if %(403, 404).include?(status)
+    nil
   rescue
     file.close if file.class == Tempfile
     nil

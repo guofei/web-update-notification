@@ -11,5 +11,8 @@ class FetchWebpageJob < ActiveJob::Base
     page = Page.find_by_id(page_id)
     return if page.nil?
     page.fetch
+  rescue
+    page.stop_fetch = true
+    page.save
   end
 end
