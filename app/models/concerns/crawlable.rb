@@ -22,7 +22,7 @@ module Crawlable
   end
 
   # instance methods
-  def crawl
+  def crawl(url)
     if USE_API
       get_title_and_content_by_node_api url
     else

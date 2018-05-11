@@ -63,7 +63,7 @@ class Page < ActiveRecord::Base
   end
 
   def update_content
-    new_title, new_content = crawl
+    new_title, new_content = crawl(url)
     return false if new_content.nil?
 
     new_digest = Digest::MD5.hexdigest(new_content)
