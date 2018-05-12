@@ -4,14 +4,12 @@ require 'timeout'
 require 'open-uri'
 require 'tempfile'
 require 'addressable/uri'
-require 'faraday'
 require 'json'
 
 # crawl web page module
 # must have url(:string)
 module Crawlable
   TIME_OUT = 30
-  USE_API = false
 
   def self.included(base)
     base.extend ClassMethods
@@ -23,11 +21,7 @@ module Crawlable
 
   # instance methods
   def crawl(url)
-    if USE_API
-      get_title_and_content_by_node_api url
-    else
-      get_title_and_content url
-    end
+    get_title_and_content url
   end
 
   private
@@ -40,26 +34,6 @@ module Crawlable
     nil
   rescue
     nil
-  end
-
-  # @param url String
-  # @return String
-  def get_title_and_content_by_node_api(url_param)
-    host = Rails.application.secrets.crawler_api_host
-    uri = get_uri(url_param)
-    return nil if uri.nil?
-    url = "#{host}/api/articles?url=#{uri}"
-    res = Faraday.get url
-    return get_title_and_content_by_res(res) if res.status == 200
-  rescue
-    nil
-  end
-
-  def get_title_and_content_by_res(res)
-    json = JSON.parse(res.body)
-    title = json['title']
-    text = json['text']
-    [title, multiline_squish(text)]
   end
 
   def multiline_squish(text)

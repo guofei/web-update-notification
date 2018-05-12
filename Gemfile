@@ -42,4 +42,3 @@ gem 'nokogiri'
 gem 'newrelic_rpm'
 
 gem 'aws-sdk', '~> 2'
-gem 'faraday', '~> 0.13.1'
