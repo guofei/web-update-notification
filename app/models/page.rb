@@ -62,6 +62,8 @@ class Page < ActiveRecord::Base
     end
   end
 
+  private
+
   def update_content
     new_title, new_content = crawl(url)
     return false if new_content.nil?
@@ -78,8 +80,6 @@ class Page < ActiveRecord::Base
 
     true
   end
-
-  private
 
   def alert_data
     message = "#{url} has been updated"
