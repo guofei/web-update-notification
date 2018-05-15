@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   include ActionController::MimeResponds
 
-  before_action :set_page, only: [:show, :update, :destroy]
+  before_action :set_page, only: [:show, :update, :destroy, :crawled]
 
   # GET /pages
   # GET /pages.json
@@ -57,6 +57,11 @@ class PagesController < ApplicationController
     else
       render json: @page.errors, status: :unprocessable_entity
     end
+  end
+
+  # POST /pages/1
+  # POST /pages/1.json
+  def crawled
   end
 
   # DELETE /pages/1
