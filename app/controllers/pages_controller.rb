@@ -50,8 +50,6 @@ class PagesController < ApplicationController
   # PATCH/PUT /pages/1
   # PATCH/PUT /pages/1.json
   def update
-    @page = Page.find(params[:id])
-
     if @page.update(page_params)
       head :no_content
     else
@@ -62,6 +60,7 @@ class PagesController < ApplicationController
   # POST /pages/1
   # POST /pages/1.json
   def crawled
+    head :no_content
   end
 
   # DELETE /pages/1
@@ -74,11 +73,11 @@ class PagesController < ApplicationController
 
   private
 
-    def set_page
-      @page = Page.find(params[:id])
-    end
+  def set_page
+    @page = Page.find(params[:id])
+  end
 
-    def page_params
-      params.require(:page).permit(:url, :sec, :push_channel, :stop_fetch)
-    end
+  def page_params
+    params.require(:page).permit(:url, :sec, :push_channel, :stop_fetch)
+  end
 end

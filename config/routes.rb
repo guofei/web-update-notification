@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   resources :pages, except: [:new, :edit] do
     get 'download', on: :collection
+    post 'crawled', on: :member
   end
   resources :reports, only: [:index]
   # The priority is based upon order of creation: first created -> highest priority.
