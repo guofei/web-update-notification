@@ -60,6 +60,8 @@ class PagesController < ApplicationController
   # POST /pages/1
   # POST /pages/1.json
   def crawled
+    @page.update(crawled_params) if params[:changed]
+
     head :no_content
   end
 
@@ -79,5 +81,9 @@ class PagesController < ApplicationController
 
   def page_params
     params.require(:page).permit(:url, :sec, :push_channel, :stop_fetch)
+  end
+
+  def crawled_params
+    params.require(:page).permit(:title, :content, :digest)
   end
 end

@@ -49,23 +49,25 @@ class Page < ActiveRecord::Base
 
   def fetch_without_push
     return if stop_fetch?
-    update_content
+    new_title, new_content = crawl(url)
+    update_content(new_title, new_content)
   end
 
   def fetch
     return if stop_fetch
     if content.blank?
-      update_content
+      new_title, new_content = crawl(url)
+      update_content(new_title, new_content)
     else
       # update content and push to device
-      push_to_device if update_content
+      new_title, new_content = crawl(url)
+      push_to_device if update_content(new_title, new_content)
     end
   end
 
   private
 
-  def update_content
-    new_title, new_content = crawl(url)
+  def update_content(new_title, new_content)
     return false if new_content.nil?
 
     new_digest = Digest::MD5.hexdigest(new_content)
