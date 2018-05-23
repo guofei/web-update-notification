@@ -40,7 +40,7 @@ class Page < ActiveRecord::Base
 
   def set_next_job
     return if stop_fetch?
-    FetchWebpageJob.set(wait: second.seconds).perform_later(id)
+    CrawlerJob.set(wait: second.seconds).perform_later(id, url, digest)
   end
 
   def second

@@ -60,7 +60,10 @@ class PagesController < ApplicationController
   # POST /pages/1
   # POST /pages/1.json
   def crawled
-    @page.update(crawled_params) if params[:changed]
+    @page.update(crawled_params) if params[:changed] == true
+
+    # enqueue
+    @page.set_next_job if params[:continue] == true
 
     head :no_content
   end
