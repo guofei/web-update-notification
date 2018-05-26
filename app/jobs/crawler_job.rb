@@ -34,7 +34,7 @@ class CrawlerJob < ActiveJob::Base
   end
 
   def crawled_api_url(id)
-    host = Rails.application.secrets.crawler_api_host
+    host = Rails.application.secrets.api_host
     "#{host}/pages/#{id}/crawled"
   end
 end
