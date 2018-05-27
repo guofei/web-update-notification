@@ -25,22 +25,15 @@ gem 'puma', '~> 3.4'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
+gem 'addressable', '~> 2.3.8'
 gem 'annotate'
-
+gem 'aws-sdk', '~> 2'
+gem 'connection_pool'
+gem 'diffy', '~> 3.1'
+gem 'faraday', '~> 0.15.1'
 gem 'kaminari', '~> 0.16.3'
-
+gem 'newrelic_rpm'
+gem 'nokogiri'
+gem 'redis-namespace'
 gem 'sidekiq', '~> 3.5', '>= 3.5.1'
 gem 'sinatra', require: nil
-gem 'connection_pool'
-gem 'redis-namespace'
-
-gem 'addressable', '~> 2.3.8'
-
-gem 'diffy', '~> 3.1'
-gem 'nokogiri'
-
-gem 'newrelic_rpm'
-
-gem 'aws-sdk', '~> 2'
-
-gem 'faraday', '~> 0.15.1'
