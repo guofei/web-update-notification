@@ -4,6 +4,8 @@ services:
     image: postgres:9.6
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
   redis:
     image: redis:3.2
     volumes:
