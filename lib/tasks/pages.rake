@@ -1,6 +1,10 @@
 require 'csv'
 
 namespace :pages do
+  task start_job: :environment do
+    Page.find_each(&:set_next_job)
+  end
+
   desc 'fetch all pages'
   task fetch: :environment do
     Page.find_each do |page|
