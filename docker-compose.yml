@@ -6,12 +6,22 @@ services:
       - ./tmp/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   redis:
     image: redis:3.2
     volumes:
       - ./tmp/redis-data:/data
     ports:
       - "6379:6379"
+    command: [
+          "bash", "-c",
+          '
+           docker-entrypoint.sh
+           --requirepass ${REDIS_PASSWORD}
+          '
+    ]
   worker:
     build: .
     volumes:
@@ -19,6 +29,12 @@ services:
     depends_on:
       - redis
     command: bundle exec sidekiq -C config/sidekiq.yml
+    environment:
+      - RAILS_ENV=${RAILS_ENV}
+      - API_URL=${API_URL}
+      - REDIS_URL=${REDIS_URL}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   web:
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
@@ -29,3 +45,9 @@ services:
     depends_on:
       - redis
       - db
+    environment:
+      - RAILS_ENV=${RAILS_ENV}
+      - API_URL=${API_URL}
+      - REDIS_URL=${REDIS_URL}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
