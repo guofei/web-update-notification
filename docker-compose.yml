@@ -5,7 +5,7 @@ services:
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "9432:5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -14,7 +14,7 @@ services:
     volumes:
       - ./tmp/redis-data:/data
     ports:
-      - "6379:6379"
+      - "9379:6379"
     command: [
           "bash", "-c",
           '
@@ -41,7 +41,7 @@ services:
     volumes:
       - .:/myapp
     ports:
-      - "3000:3000"
+      - "80:3000"
     depends_on:
       - redis
       - db
