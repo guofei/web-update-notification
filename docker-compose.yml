@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   db:
     image: postgres:9.6
@@ -29,14 +29,7 @@ services:
     depends_on:
       - redis
     command: bundle exec sidekiq -C config/sidekiq.yml
-    environment:
-      - RAILS_ENV=${RAILS_ENV}
-      - API_URL=${API_URL}
-      - REDIS_URL=${REDIS_URL}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - NEWRELIC_LICENSE=${NEWRELIC_LICENSE}
-      - NEWRELIC_APPNAME=${NEWRELIC_APPNAME}
+    env_file: .env
   web:
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
@@ -47,11 +40,4 @@ services:
     depends_on:
       - redis
       - db
-    environment:
-      - RAILS_ENV=${RAILS_ENV}
-      - API_URL=${API_URL}
-      - REDIS_URL=${REDIS_URL}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - NEWRELIC_LICENSE=${NEWRELIC_LICENSE}
-      - NEWRELIC_APPNAME=${NEWRELIC_APPNAME}
+    env_file: .env
