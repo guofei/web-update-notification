@@ -1,0 +1,8 @@
+version: '2'
+services:
+  worker_standalone:
+    build: .
+    volumes:
+      - .:/myapp
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    env_file: .env
