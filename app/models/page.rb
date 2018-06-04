@@ -43,6 +43,13 @@ class Page < ActiveRecord::Base
     CrawlerJob.set(wait: second.seconds).perform_later(id, url, digest)
   end
 
+  def push_to_device
+    user.push_to_device(alert_data)
+  rescue
+    nil
+  end
+
+
   def second
     [min_check_time, sec].max
   end
@@ -137,12 +144,6 @@ class Page < ActiveRecord::Base
 
   def last_check_time
     (Time.zone.now - updated_at).to_i
-  end
-
-  def push_to_device
-    user.push_to_device(alert_data)
-  rescue
-    nil
   end
 
   def stop_fetch?
