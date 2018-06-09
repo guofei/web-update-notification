@@ -44,11 +44,11 @@ class Page < ActiveRecord::Base
   end
 
   def push_to_device
+    return if stop_fetch?
     user.push_to_device(alert_data)
   rescue
     nil
   end
-
 
   def second
     [min_check_time, sec].max
