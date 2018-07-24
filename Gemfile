@@ -35,5 +35,5 @@ gem 'kaminari', '~> 0.16.3'
 gem 'newrelic_rpm'
 gem 'nokogiri', '~> 1.6', '>= 1.6.6.2'
 gem 'redis-namespace'
-gem 'sidekiq', '< 4'
+gem 'sidekiq', '< 5'
 gem 'sinatra', require: nil
