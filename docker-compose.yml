@@ -15,13 +15,7 @@ services:
       - ./tmp/redis-data:/data
     ports:
       - "9379:6379"
-    command: [
-          "bash", "-c",
-          '
-           docker-entrypoint.sh
-           --requirepass ${REDIS_PASSWORD}
-          '
-    ]
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
   worker:
     build: .
     volumes:
