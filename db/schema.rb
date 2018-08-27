@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161007053455) do
+ActiveRecord::Schema.define(version: 20180826142517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20161007053455) do
     t.boolean  "stop_fetch",   default: false
     t.text     "content_diff"
     t.string   "title"
+    t.boolean  "enable_js",    default: false
   end
 
   create_table "users", force: :cascade do |t|

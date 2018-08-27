@@ -13,6 +13,7 @@
 #  stop_fetch   :boolean          default(FALSE)
 #  content_diff :text
 #  title        :string
+#  enable_js    :boolean          default(FALSE)
 #
 
 require 'test_helper'
