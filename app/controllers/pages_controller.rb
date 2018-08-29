@@ -33,7 +33,9 @@ class PagesController < ApplicationController
     new_page = Page.new(page_params)
     @page = Page.find_by(url: new_page.url, push_channel: new_page.push_channel)
     if @page
+      # TODO use update
       @page.sec = new_page.sec
+      @page.enable_js = new_page.enable_js
       @page.stop_fetch = new_page.stop_fetch
       @page.save
       render json: @page, status: :created, location: @page
@@ -86,7 +88,13 @@ class PagesController < ApplicationController
   end
 
   def page_params
-    params.require(:page).permit(:url, :sec, :push_channel, :stop_fetch)
+    params.require(:page).permit(
+      :url,
+      :sec,
+      :push_channel,
+      :stop_fetch,
+      :enable_js
+    )
   end
 
   def crawled_params
