@@ -8,6 +8,8 @@ set .env
 docker-compose build
 
 docker-compose up -d
+
+docker-compose run web rake db:migrate
 ```
 
 ### Deploy Worker
