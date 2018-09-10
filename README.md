@@ -28,6 +28,13 @@ docker-compose -f docker-compose-worker.yml up -d
 docker-compose run web rake jobs:init
 ```
 
+### Stop
+```
+docker-compose stop
+
+docker-compose -f docker-compose-worker.yml stop
+```
+
 ### Test
 
 ```
