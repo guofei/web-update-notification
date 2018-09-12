@@ -51,6 +51,13 @@ class Page < ActiveRecord::Base
     nil
   end
 
+  def push_error_to_device(message)
+    return if stop_fetch?
+    user.push_to_device(alert_error_data(message))
+  rescue
+    nil
+  end
+
   def second
     [min_check_time, sec].max
   end
@@ -93,6 +100,19 @@ class Page < ActiveRecord::Base
 
   def alert_data
     message = "#{url} has been updated"
+    apns_data = {
+      aps: {
+        'sound': 'default',
+        'alert': message,
+        'content-available': 1,
+        'url': url
+      }
+    }
+    { default: message, APNS: apns_data.to_json }.to_json
+  end
+
+  def alert_error_data(err_msg)
+    message = "#{url} #{err_msg}"
     apns_data = {
       aps: {
         'sound': 'default',

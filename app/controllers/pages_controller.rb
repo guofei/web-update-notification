@@ -62,6 +62,7 @@ class PagesController < ApplicationController
   # POST /pages/1
   # POST /pages/1.json
   def crawled
+    # TODO check error
     if params[:changed] == true
       @page.update(crawled_params)
       @page.push_to_device
