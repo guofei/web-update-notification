@@ -11,8 +11,7 @@ class CrawlerJob < ActiveJob::Base
     param = get_params(new_title, new_content, old_digest)
     post(crawled_api_url(page_id), param)
   rescue OpenURI::HTTPError => e
-    # TODO set error code
-    post(crawled_api_url(page_id), error: true, message: e.message)
+    post(crawled_api_url(page_id), error: e.inspect, message: e.message)
   end
 
   private

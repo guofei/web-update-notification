@@ -62,14 +62,16 @@ class PagesController < ApplicationController
   # POST /pages/1
   # POST /pages/1.json
   def crawled
-    # TODO check error
-    if params[:changed] == true
-      @page.update(crawled_params)
-      @page.push_to_device
+    if params[:error]
+      @page.push_error_to_device(params[:message])
+    else
+      if params[:changed] == true
+        @page.update(crawled_params)
+        @page.push_to_device
+      end
+      # enqueue
+      @page.set_next_job if params[:continue] == true
     end
-
-    # enqueue
-    @page.set_next_job if params[:continue] == true
 
     head :no_content
   end
