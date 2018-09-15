@@ -112,7 +112,7 @@ class Page < ActiveRecord::Base
   end
 
   def alert_error_data(err_msg)
-    message = "#{url} #{err_msg}"
+    message = "Error: #{err_msg} #{url}"
     apns_data = {
       aps: {
         'sound': 'default',
