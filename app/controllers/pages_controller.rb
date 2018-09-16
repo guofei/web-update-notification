@@ -64,6 +64,8 @@ class PagesController < ApplicationController
   def crawled
     if params[:error]
       @page.push_error_to_device(params[:message])
+      @page.stop_fetch = true
+      @page.save
     else
       if params[:changed] == true
         @page.update(crawled_params)
