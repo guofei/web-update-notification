@@ -1,0 +1,14 @@
+version: '2'
+services:
+  hub:
+    image: selenium/hub:3.14.0-europium
+    ports:
+      - "4444:4444"
+  chrome:
+    image: selenium/node-chrome:3.14.0-europium
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
